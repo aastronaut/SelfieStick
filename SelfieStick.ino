@@ -19,7 +19,7 @@
  */
 
 // pins
-const unsigned int TILT_PIN = 12;             // sensor for rotation
+const unsigned int TILT_PIN = 12;             // sensor for positioning
 const unsigned int RELAIS_PIN = 3;            // relais triggering shot
 const unsigned int LED_PINS[] = {4, 5, 6};    // leds indicating process
 
@@ -87,9 +87,11 @@ boolean isTilted() {
   static boolean tilted;
   static float tiltLevel;
 
+  // add delta
   float newTilt = (float) digitalRead(TILT_PIN);
   tiltLevel += (newTilt - tiltLevel) * LOW_PASS;
 
+  // flip state if necessary
   if(
     (!tilted && tiltLevel >= THRESHOLD_HIGH) ||
     ( tilted && tiltLevel <= THRESHOLD_LOW )
@@ -99,6 +101,8 @@ boolean isTilted() {
 
   return tilted;
 }
+
+
 
 void shotCycle() {
   static int ledIndex;
@@ -158,6 +162,8 @@ void shotCycle() {
       break;
   }
 }
+
+
 
 void reset(States newState = WAIT_FOR_LIFT) {
   // shut down relais
