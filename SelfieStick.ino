@@ -84,14 +84,14 @@ void loop() {
 
 
 boolean isTilted() {
-  static boolean tilted;
-  static float tiltLevel;
+  static boolean tilted;  // resulting state
+  static float tiltLevel; // keeps track of the float number
 
-  // add delta
-  float newTilt = (float) digitalRead(TILT_PIN);
+  // add delta with lowpass for bouncing
+  float newTilt = digitalRead(TILT_PIN) ? 1.0f : 0.0f;
   tiltLevel += (newTilt - tiltLevel) * LOW_PASS;
 
-  // flip state if necessary
+  // flip state if thresholds gets exceeded
   if(
     (!tilted && tiltLevel >= THRESHOLD_HIGH) ||
     ( tilted && tiltLevel <= THRESHOLD_LOW )
