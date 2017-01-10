@@ -13,26 +13,28 @@
  * Set the timings accordingly.
  * Configure the force tilt lowpass filter for a good result.
  * 
- * 1/10/2016
+ * 1/10/2017
  * aastronaut | F. Gutwiller
  * See the LICENCE file in repository.
  */
 
 // pins
-const unsigned int TILT_PIN = 12;
-const unsigned int RELAIS_PIN = 3;
-const unsigned int LED_PINS[] = {4, 5, 6};
+const unsigned int TILT_PIN = 12;             // sensor for rotation
+const unsigned int RELAIS_PIN = 3;            // relais triggering shot
+const unsigned int LED_PINS[] = {4, 5, 6};    // leds indicating process
 
 // timings
-const unsigned int BLINK_SEQUENCE = 1500;
-const unsigned int AFTER_LAST_LED = 500;
-const unsigned int RELAIS_TRIGGER_TIME = 20;
-const unsigned int PAUSE_AFTER_SHOT = 5000;
+const unsigned int BLINK_SEQUENCE = 1500;     // timing between ledchange
+const unsigned int AFTER_LAST_LED = 500;      // last led to relais time
+const unsigned int RELAIS_TRIGGER_TIME = 20;  // relais trigger
+const unsigned int PAUSE_AFTER_SHOT = 5000;   // after shot
 
 // filter, adjust for force tilt sensor
-const float LOW_PASS = 0.5f;
-const float THRESHOLD_HIGH = 0.7f;
-const float THRESHOLD_LOW = 0.3f;
+const float LOW_PASS = 0.5f;                  // 1.0 for no filter
+const float THRESHOLD_HIGH = 0.7f;            // >= 0.5
+const float THRESHOLD_LOW = 0.3f;             // < 0.5
+
+
 
 // states
 enum States {
@@ -42,8 +44,6 @@ enum States {
   SHOT_DONE,      // turn LEDs and relais off simultaneously
   PAUSE,          // wait until new shot
 } state;
-
-
 
 // for readability
 const int LED_COUNT = sizeof(LED_PINS)/sizeof(*LED_PINS);
@@ -65,6 +65,8 @@ void setup() {
   state = WAIT_FOR_LIFT;
 }
 
+
+
 void loop() {
   if(isTilted()) {
     shotCycle();
@@ -78,6 +80,7 @@ void loop() {
   // to save some of an arduinos lifetime
   delay(10);
 }
+
 
 
 boolean isTilted() {
@@ -96,7 +99,6 @@ boolean isTilted() {
 
   return tilted;
 }
-
 
 void shotCycle() {
   static int ledIndex;
