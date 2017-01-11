@@ -30,9 +30,9 @@ const unsigned int RELAIS_TRIGGER_TIME = 20;  // relais trigger
 const unsigned int PAUSE_AFTER_SHOT = 5000;   // after shot
 
 // filter, adjust for force tilt sensor
-const float LOW_PASS = 0.5f;                  // 1.0 for no filter
-const float THRESHOLD_HIGH = 0.7f;            // >= 0.5
-const float THRESHOLD_LOW = 0.3f;             // < 0.5
+const float LOW_PASS = 0.3f;                  // 1.0 for no filter
+const float THRESHOLD_HIGH = 0.8f;            // >= 0.5
+const float THRESHOLD_LOW = 0.2f;             // < 0.5
 
 
 
