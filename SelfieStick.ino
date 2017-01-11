@@ -47,7 +47,7 @@ enum States {
 
 // for readability
 const int LED_COUNT = sizeof(LED_PINS)/sizeof(*LED_PINS);
-void reset(States newState = WAIT_FOR_LIFT);
+void reset(States newState);
 
 
 
@@ -74,7 +74,7 @@ void loop() {
 
   // reset only when necessary
   else if(state != WAIT_FOR_LIFT) {
-    reset();
+    reset(WAIT_FOR_LIFT);
   }
 
   // to save some of an arduinos lifetime
@@ -165,7 +165,7 @@ void shotCycle() {
 
 
 
-void reset(States newState = WAIT_FOR_LIFT) {
+void reset(States newState) {
   // shut down relais
   digitalWrite(RELAIS_PIN, LOW);
 
